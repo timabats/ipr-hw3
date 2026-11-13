@@ -1,0 +1,43 @@
+tima@tima-GTi14:~/code/ipr/hw3$ sudo docker compose up -d
+[+] up 3/3
+ ✔ Network hw3_default Created                                              0.0s
+ ✔ Volume hw3_data     Created                                              0.0s
+ ✔ Container hw3-app-1 Started                                              0.2s
+tima@tima-GTi14:~/code/ipr/hw3$ curl -s localhost:1234 | jq
+{
+  "greeting": "Hello to @AtgshkaSan and @pchelka_zh from @tima_batsyn!",
+  "count": 0,
+  "hostname": "3182a0dc9ec1",
+  "storage": "sqlite"
+}
+tima@tima-GTi14:~/code/ipr/hw3$ curl -s -X POST localhost:1234/increment | jq
+{
+  "greeting": "Hello to @AtgshkaSan and @pchelka_zh from @tima_batsyn!",
+  "count": 1,
+  "hostname": "3182a0dc9ec1",
+  "storage": "sqlite"
+}
+tima@tima-GTi14:~/code/ipr/hw3$ curl -s -X POST localhost:1234/increment | jq
+{
+  "greeting": "Hello to @AtgshkaSan and @pchelka_zh from @tima_batsyn!",
+  "count": 2,
+  "hostname": "3182a0dc9ec1",
+  "storage": "sqlite"
+}
+tima@tima-GTi14:~/code/ipr/hw3$ sudo docker compose down
+[+] down 2/2
+ ✔ Container hw3-app-1 Removed                                             10.3s
+ ✔ Network hw3_default Removed                                              0.1s
+tima@tima-GTi14:~/code/ipr/hw3$ curl -s localhost:1234 | jq
+tima@tima-GTi14:~/code/ipr/hw3$ sudo docker compose up -d
+[+] up 2/2
+ ✔ Network hw3_default Created                                              0.0s
+ ✔ Container hw3-app-1 Started                                              0.2s
+tima@tima-GTi14:~/code/ipr/hw3$ curl -s localhost:1234 | jq
+{
+  "greeting": "Hello to @AtgshkaSan and @pchelka_zh from @tima_batsyn!",
+  "count": 2,
+  "hostname": "64f64cd60749",
+  "storage": "sqlite"
+}
+

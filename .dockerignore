@@ -1,0 +1,13 @@
+.git/
+
+.env
+.env.example
+
+README.md
+
+backup/
+scripts/
+reports/
+
+Dockerfile
+compose.yaml

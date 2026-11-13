@@ -1,0 +1,82 @@
+tima@tima-GTi14:~/code/ipr/hw3$ sudo docker compose up -d
+[+] up 4/4
+ ✔ Network hw3_default   Created                                            0.0s
+ ✔ Volume hw3_data       Created                                            0.0s
+ ✔ Container hw3-redis-1 Healthy                                            5.8s
+ ✔ Container hw3-app-1   Started                                            5.9s
+tima@tima-GTi14:~/code/ipr/hw3$ curl -s localhost:1234 | jq
+{
+  "greeting": "Hello to @AtgshkaSan and @pchelka_zh from @tima_batsyn!",
+  "count": 0,
+  "hostname": "7e5b7295bdcf",
+  "storage": "redis"
+}
+tima@tima-GTi14:~/code/ipr/hw3$ curl -s -X POST localhost:1234/increment | jq
+{
+  "greeting": "Hello to @AtgshkaSan and @pchelka_zh from @tima_batsyn!",
+  "count": 1,
+  "hostname": "7e5b7295bdcf",
+  "storage": "redis"
+}
+tima@tima-GTi14:~/code/ipr/hw3$ curl -s -X POST localhost:1234/increment | jq
+{
+  "greeting": "Hello to @AtgshkaSan and @pchelka_zh from @tima_batsyn!",
+  "count": 2,
+  "hostname": "7e5b7295bdcf",
+  "storage": "redis"
+}
+tima@tima-GTi14:~/code/ipr/hw3$ curl -s -X POST localhost:1234/increment | jq
+{
+  "greeting": "Hello to @AtgshkaSan and @pchelka_zh from @tima_batsyn!",
+  "count": 3,
+  "hostname": "7e5b7295bdcf",
+  "storage": "redis"
+}
+tima@tima-GTi14:~/code/ipr/hw3$ sudo docker compose down
+[+] down 3/3
+ ✔ Container hw3-app-1   Removed                                           10.3s
+ ✔ Container hw3-redis-1 Removed                                            0.2s
+ ✔ Network hw3_default   Removed                                            0.1s
+tima@tima-GTi14:~/code/ipr/hw3$ 
+tima@tima-GTi14:~/code/ipr/hw3$ sudo docker compose up -d
+[+] up 3/3
+ ✔ Network hw3_default   Created                                            0.0s
+ ✔ Container hw3-redis-1 Healthy                                            5.8s
+ ✔ Container hw3-app-1   Started                                            5.9s
+tima@tima-GTi14:~/code/ipr/hw3$ curl -s localhost:1234 | jq
+{
+  "greeting": "Hello to @AtgshkaSan and @pchelka_zh from @tima_batsyn!",
+  "count": 3,
+  "hostname": "1bc74db64749",
+  "storage": "redis"
+}
+tima@tima-GTi14:~/code/ipr/hw3$ sudo docker compose stop redis
+[+] stop 1/1
+ ✔ Container hw3-redis-1 Stopped                                            0.2s
+tima@tima-GTi14:~/code/ipr/hw3$ curl -s localhost:1234/healthz | jq
+{
+  "status": "alive"
+}
+tima@tima-GTi14:~/code/ipr/hw3$ curl -s -o /dev/null -w "%{http_code\n}" localhost:1234/healthz
+curl: unknown --write-out variable: 'http_code\n'
+tima@tima-GTi14:~/code/ipr/hw3$ curl -s -o /dev/null -w "%{http_code}\n" localhost:1234/healthz
+200
+tima@tima-GTi14:~/code/ipr/hw3$ curl -s -o /dev/null -w "%{http_code}\n" localhost:1234/readyz
+503
+tima@tima-GTi14:~/code/ipr/hw3$ sudo docker compose start redis
+[+] start 1/1
+ ✔ Container hw3-redis-1 Started                                            0.1s
+tima@tima-GTi14:~/code/ipr/hw3$ curl -s localhost:1234 | jq
+{
+  "greeting": "Hello to @AtgshkaSan and @pchelka_zh from @tima_batsyn!",
+  "count": 3,
+  "hostname": "1bc74db64749",
+  "storage": "redis"
+}
+tima@tima-GTi14:~/code/ipr/hw3$ curl -s -X POST localhost:1234/increment | jq
+{
+  "greeting": "Hello to @AtgshkaSan and @pchelka_zh from @tima_batsyn!",
+  "count": 4,
+  "hostname": "1bc74db64749",
+  "storage": "redis"
+}

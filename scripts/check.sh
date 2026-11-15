@@ -3,7 +3,7 @@
 set -eo pipefail
 
 RANDOM_NAME="test_$(date +%s)"
-trap 'docker compose -p $RANDOM_NAME down -v' EXIT
+trap 'docker compose -p $RANDOM_NAME down -v; docker rmi ${RANDOM_NAME}-app' EXIT
 
 STAGE="starting containers"
 trap 'echo "failed on" $STAGE; exit 1' ERR
